@@ -382,9 +382,11 @@ def main():
             num_of_solutions = Competition.number_of_solutions(problem)
             aco= ACO()
             nds = aco.solve(problem, num_of_solutions)
-            ref_point = (6646.0, -0.0)
-            print(nds)
-            print(f'HV: {HV(nds, ref_point)}')
+            ref_point = (66646.0, -0.0)
+            objectives = np.array([sol.objectives for sol in nds.entries])
+            print(objectives)
+            hv = HV(ref_point=ref_point)
+            print(f'HV: {hv(objectives)}')
             
 
 if __name__ == "__main__":
