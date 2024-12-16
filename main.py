@@ -1,6 +1,7 @@
 import numpy as np
 import math
 from pymoo.indicators.hv import HV
+import random
 
 class TravelingThiefProblem:
     def __init__(self):
@@ -220,7 +221,15 @@ class ACO:
              for j, p1 in enumerate(coordinates)] 
             for i, p2 in enumerate(coordinates)]
     
-    def swap_cities(self, tour, i, j):
+    def swap_cities(self, tour, n):
+        # if the number of cites is less than 2, we can not swap 2 different cities because the start city always is city 0
+        if n <= 2:
+            return tour
+         # swap the second and the last city(except the first city, the tour like 0,2,1,...,5,0. so we don't take the first and the last elements)
+        i = random.randint(1, n-1)
+        j = random.randint(1, n-1)
+        while i == j:
+            j = random.randint(1, n-1)
         new_tour = tour.copy()
         new_tour[i], new_tour[j] = new_tour[j], new_tour[i]
         return new_tour
@@ -362,15 +371,12 @@ class ACO:
                             for no_ants in lst_no_ants:
                                 tour = self.construct_tsp_tour(problem.num_of_cities, pheromone_matrix, local_heuristic, _alpha, _beta)
                                 # apply local search to avoid local mimimum value
-                                # swap the first and the last city(except the first city, the tour like 0,2,1,...,5,0. so we don't take the first and the last elements)
-                                new_tour = self.swap_cities(tour, 1, problem.num_of_cities - 1)
+                                new_tour = self.swap_cities(tour, problem.num_of_cities)
                                 # print(new_tour)
                                 self.update_solutions_by_tour(tour, nds, problem, True, distance_matrix, pheromone_matrix, _rho, Q)
                                 self.update_solutions_by_tour(new_tour, nds, problem, False, distance_matrix, pheromone_matrix, _rho, Q)
         
         return nds
-                                
-    
 
 def main():
     instance_2_run = ['a280-n279']
@@ -386,8 +392,7 @@ def main():
             objectives = np.array([sol.objectives for sol in nds.entries])
             print(objectives)
             hv = HV(ref_point=ref_point)
-            print(f'HV: {hv(objectives)}')
-            
+            print(f'HV: {hv(objectives)}')         
 
 if __name__ == "__main__":
     main()
