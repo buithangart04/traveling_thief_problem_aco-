@@ -79,8 +79,6 @@ class NonDominatedSet:
         # Entries of the non-dominated set
         self.entries = []
         self.number_of_entries = number_of_entries
-    
-    import numpy as np
 
     def calculate_crowding_distance_solutions(self):
         num_solutions = len(self.entries)
