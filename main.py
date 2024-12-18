@@ -2,6 +2,8 @@ import numpy as np
 import math
 from pymoo.indicators.hv import HV
 import random
+import itertools
+
 
 class TravelingThiefProblem:
     def __init__(self):
@@ -57,6 +59,7 @@ class TravelingThiefProblem:
 
             line = file.readline()
 
+
 class Competition:
     @staticmethod
     def number_of_solutions(problem):
@@ -69,6 +72,7 @@ class Competition:
             return 20
         else:
             return 1000
+
 
 class NonDominatedSet:
     """
@@ -97,7 +101,7 @@ class NonDominatedSet:
 
             min_value = sorted_solutions[0].objectives[m]
             max_value = sorted_solutions[-1].objectives[m]
-            
+
             if max_value - min_value == 0:
                 continue
 
@@ -105,9 +109,9 @@ class NonDominatedSet:
                 next_obj = sorted_solutions[i + 1].objectives[m]
                 prev_obj = sorted_solutions[i - 1].objectives[m]
                 crowding_distances[sorted_solutions[i]] += (next_obj - prev_obj) / (max_value - min_value)
-        
+
         return crowding_distances
-    
+
     def remove_lowest_crowding_distance(self):
         crowding_distances = self.calculate_crowding_distance_solutions()
 
@@ -122,7 +126,7 @@ class NonDominatedSet:
         if solution_to_remove is not None:
             self.entries.remove(solution_to_remove)
 
-        return solution_to_remove 
+        return solution_to_remove
 
     def add(self, solution):
         """
@@ -146,12 +150,13 @@ class NonDominatedSet:
 
         if is_added:
             self.entries.append(solution)
-        
+
         if is_added & len(self.entries) > self.number_of_entries:
             self.remove_lowest_crowding_distance()
 
         return is_added
-    
+
+
 class Solution:
     """
     This is a solution objective class that stores the tour, packing plan, 
@@ -206,42 +211,48 @@ class Solution:
         """
         return self.pi == other.pi and self.z == other.z
 
+
 class ACO:
+    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants, distance_matrix, local_heuristic):
+        self.nds = NonDominatedSet(num_of_solutions)
+        self.Q = Q
+        self._rho = _rho
+        self._alpha = _alpha
+        self._beta = _beta
+        self.iterations = iterations
+        self.n_ants = n_ants
 
-    def calculate_distance_matrix(self, coordinates):
-        return [[ math.dist(p1,p2) if i != j else 0 
-                for j, p1 in enumerate(coordinates)] 
-                for i, p2 in enumerate(coordinates)]
+        self.pheromone_matrix = np.random.uniform(0.1, 1, (problem.num_of_cities, problem.num_of_cities))
+        np.fill_diagonal(self.pheromone_matrix, 0)
+        self.problem = problem
+        self.distance_matrix = distance_matrix
+        self.local_heuristic = local_heuristic
 
-    """calculate local heuristic in the constructing tour part"""
-    def calculate_local_heuristic(self, coordinates):
-        return [[1 / math.dist(p1, p2) if i != j and math.dist(p1, p2) != 0  else 0 
-             for j, p1 in enumerate(coordinates)] 
-            for i, p2 in enumerate(coordinates)]
-    
     def swap_cities(self, tour, n):
         # if the number of cites is less than 2, we can not swap 2 different cities because the start city always is city 0
         if n <= 2:
             return tour
-         # swap the second and the last city(except the first city, the tour like 0,2,1,...,5,0. so we don't take the first and the last elements)
-        i = random.randint(1, n-1)
-        j = random.randint(1, n-1)
+
+        # swap the second and the last city(except the first city, the tour like 0,2,1,...,5,0. so we don't take the
+        # first and the last elements)
+        i = random.randint(1, n - 1)
+        j = random.randint(1, n - 1)
         while i == j:
-            j = random.randint(1, n-1)
+            j = random.randint(1, n - 1)
         new_tour = tour.copy()
         new_tour[i], new_tour[j] = new_tour[j], new_tour[i]
         return new_tour
 
-    def construct_tsp_tour(self, num_of_cities, pheromone_matrix, local_heuristic, _alpha, _beta):
+    def construct_tsp_tour(self, num_of_cities):
         tour = [0]
         while len(tour) < num_of_cities:
             current_city = tour[-1]
             probabilities = []
             for j in range(num_of_cities):
                 if j not in tour:
-                    tau = pheromone_matrix[current_city][j]
-                    eta = local_heuristic[current_city] [j]
-                    probabilities.append((tau ** _alpha) * (eta ** _beta))
+                    tau = self.pheromone_matrix[current_city][j]
+                    eta = self.local_heuristic[current_city][j]
+                    probabilities.append((tau ** self._alpha) * (eta ** self._beta))
                 else:
                     probabilities.append(0)
             probabilities = np.array(probabilities)
@@ -252,147 +263,188 @@ class ACO:
         tour.append(0)
         return tour
 
-    def construct_packing_plan(self, problem, tour, ptries, distance_matrix):
+    def construct_packing_plan(self, tour, n_tries):
         best_plan = [{}]
         selected_bags = [[]]
         best_profit = [0, 0]
-        
-        for _ in range(ptries):
+
+        # distance_until_end[i] is the distance from city i to the end of the tour
+        distance_until_end = [0 for _ in range(self.problem.num_of_cities)]
+        for i in range(len(tour) - 2, 0, -1):
+            distance_until_end[tour[i]] = distance_until_end[tour[i + 1]] + self.distance_matrix[tour[i]][tour[i + 1]]
+
+        for _ in range(n_tries):
             # random theta, delta, gamma between 0 and 1, and theta + delta + gamma = 1 
             theta, delta, gamma = np.random.rand(3)
             norm = theta + delta + gamma
             theta, delta, gamma = theta / norm, delta / norm, gamma / norm
-            
+
             scores = []
             for index, value in enumerate(problem.items):
                 profit, weight, city = value
-                distance = sum(distance_matrix[city][c] for c in tour if c >= city)
-                if weight == 0 or distance == 0:
+                if weight == 0 or distance_until_end[city] == 0:
                     score = 0
                 else:
-                    score = (profit ** theta) / ((weight ** delta) * (distance ** gamma))
+                    score = (profit ** theta) / ((weight ** delta) * (distance_until_end[city] ** gamma))
                 scores.append((score, profit, weight, city, index))
-            
+
             scores.sort(reverse=True, key=lambda x: x[0])
             current_weight = 0
             # list of plans, the first plan always select no bag.
             total_profit = [0]
             current_plan = [{}]
             current_selected_bags = [[]]
-            #start with 1 selected bag
+            # start with 1 selected bag
             number_of_selected_bags = 1
             for _, profit, weight, city, index in scores:
                 if current_weight + weight <= problem.max_weight:
                     # get the previous plan and append this bag to this plan
-                    previous_profit = total_profit[number_of_selected_bags -1]
-                    previous_selected_bags = current_selected_bags[number_of_selected_bags -1].copy()
-                    previous_plan = current_plan[number_of_selected_bags -1].copy()
+                    previous_profit = total_profit[number_of_selected_bags - 1]
+                    previous_selected_bags = current_selected_bags[number_of_selected_bags - 1].copy()
+                    previous_plan = current_plan[number_of_selected_bags - 1].copy()
                     if city not in previous_plan:
                         previous_plan[city] = 0
                     previous_plan[city] += weight
                     previous_selected_bags.append(index)
                     current_weight += weight
                     previous_profit += profit
-                    
+
                     total_profit.append(previous_profit)
                     current_plan.append(previous_plan)
                     current_selected_bags.append(previous_selected_bags)
                     number_of_selected_bags += 1
-                else : break
+                else:
+                    break
             if total_profit[1] > best_profit[1]:
                 best_plan = current_plan
-                selected_bags = current_selected_bags 
+                selected_bags = current_selected_bags
                 best_profit = total_profit
-        
-        return (selected_bags, best_plan, best_profit)
 
-    def calculate_total_time (self, distance_matrix, tour, best_plan, capacity, max_speed, min_speed):
+        return selected_bags, best_plan, best_profit
+
+    def calculate_total_time(self, tour, best_plan, capacity, max_speed, min_speed):
         total_time = 0
         current_weight = 0
         for i in range(len(tour) - 1):
             city = tour[i]
             next_city = tour[i + 1]
             current_weight += best_plan.get(city, 0)
-            current_speed = max_speed - current_weight/capacity
-            if current_speed < min_speed : current_speed = min_speed
-            distance = distance_matrix[city][next_city]
+            current_speed = max_speed - current_weight / capacity
+            if current_speed < min_speed: current_speed = min_speed
+            distance = self.distance_matrix[city][next_city]
             total_time += distance / current_speed
 
         return total_time
-    
-    def calculate_fitness(self, Q, total_profit, total_time):
-        return Q * total_profit / total_time
-    
-    def update_pheromones(self, pheromone_matrix, _rho, tour, fitness):
-        pheromone_matrix *= (1 - _rho)
+
+    def calculate_fitness(self, total_profit, total_time):
+        return self.Q * total_profit / total_time
+
+    def update_pheromones(self, tour, fitness):
+        self.pheromone_matrix *= (1 - self._rho)
         for i in range(len(tour) - 1):
-            pheromone_matrix[tour[i]][tour[i+1]] += fitness
+            self.pheromone_matrix[tour[i]][tour[i + 1]] += fitness
 
-    def update_solutions_by_tour(self, tour, nds, problem, is_original_tour, distance_matrix, pheromone_matrix, _rho, Q):
-        selected_bags, best_plan, total_profit = self.construct_packing_plan(problem, tour, 50, distance_matrix)
+    def update_solutions_by_tour(self, tour, is_original_tour):
+        selected_bags, best_plan, total_profit = self.construct_packing_plan(tour, 3)
         for i in range(len(total_profit)):
-            total_time = self.calculate_total_time (distance_matrix, tour, best_plan[i],
-                                                        problem.max_weight, problem.max_speed, problem.min_speed)
+            total_time = self.calculate_total_time(tour, best_plan[i],
+                                                   self.problem.max_weight, self.problem.max_speed,
+                                                   self.problem.min_speed)
             sol = Solution(total_time, total_profit[i], tour, selected_bags[i])
-            nds.add(sol)
-            if is_original_tour == True:
-                fitness = self.calculate_fitness(Q, total_profit[i], total_time)
-                # print(fitness)
-                self.update_pheromones(pheromone_matrix, _rho, tour, fitness)
-        
+            self.nds.add(sol)
 
-    def solve(self, problem, num_of_solutions):
-        nds = NonDominatedSet(num_of_solutions)
-        # number of population
-        lst_no_ants = [10]
-        # pheromone coefficent
-        lst_alpha = [1]
-        # heuristic coefficent
-        lst_beta = [1]
-        #evaporation rate
-        lst_evaporation_rate = [0.3]
-        # fitness coefficent
-        lst_fitness_coefficient = [0.5]
-        # number of generations
-        iterations = 10
-        # pheromone matrix
-        pheromone_matrix = np.random.uniform(0.1, 1, (problem.num_of_cities, problem.num_of_cities))
-        np.fill_diagonal(pheromone_matrix, 0)
-        # calculate distance matrix of all edges
-        distance_matrix = self.calculate_distance_matrix(problem.coordinates)
-        local_heuristic = self.calculate_local_heuristic(problem.coordinates)
-        for Q in lst_fitness_coefficient:
-            for _rho in lst_evaporation_rate:
-                for _alpha in lst_alpha:
-                    for _beta in lst_beta:
-                        for _ in range(iterations):
-                            for no_ants in lst_no_ants:
-                                tour = self.construct_tsp_tour(problem.num_of_cities, pheromone_matrix, local_heuristic, _alpha, _beta)
-                                # apply local search to avoid local mimimum value
-                                new_tour = self.swap_cities(tour, problem.num_of_cities)
-                                # print(new_tour)
-                                self.update_solutions_by_tour(tour, nds, problem, True, distance_matrix, pheromone_matrix, _rho, Q)
-                                self.update_solutions_by_tour(new_tour, nds, problem, False, distance_matrix, pheromone_matrix, _rho, Q)
-        
-        return nds
+            if is_original_tour:
+                fitness = self.calculate_fitness(total_profit[i], total_time)
+                self.update_pheromones(tour, fitness)
 
-def main():
+    def solve(self):
+        for _ in range(self.iterations):
+            print(f"Iteration: {_}")
+            for k in range(self.n_ants):
+                tour = self.construct_tsp_tour(self.problem.num_of_cities)
+
+                # apply local search to avoid local mimimum value
+                new_tour = self.swap_cities(tour, self.problem.num_of_cities)
+
+                self.update_solutions_by_tour(tour, True)
+                self.update_solutions_by_tour(new_tour, False)
+
+        return self.nds
+
+class Util:
+
+    def __init__(self):
+        pass
+
+    def calculate_distance_matrix(self, coordinates):
+        return [[math.dist(p1, p2) if i != j else 0
+                 for j, p1 in enumerate(coordinates)]
+                for i, p2 in enumerate(coordinates)]
+
+    """calculate local heuristic in the constructing tour part"""
+
+    def calculate_local_heuristic(self, coordinates):
+        return [[1 / math.dist(p1, p2) if i != j and math.dist(p1, p2) != 0 else 0
+                 for j, p1 in enumerate(coordinates)]
+                for i, p2 in enumerate(coordinates)]
+
+if __name__ == "__main__":
     instance_2_run = ['a280-n279']
+    Z_ideal = {'a280-n279': [2613.0, -42036.0]}
+    Z_nadir = {'a280-n279': [26299.81, -0.0]}
+
     for instance in instance_2_run:
         with open(f'resources/{instance}.txt', 'r', encoding='utf-8') as file:
             problem = TravelingThiefProblem()
             problem.read_problem(file)
             problem.name = instance
             num_of_solutions = Competition.number_of_solutions(problem)
-            aco= ACO()
-            nds = aco.solve(problem, num_of_solutions)
-            ref_point = (66646.0, -0.0)
+
+        # Parameter ranges
+        ant_counts = [5, 7, 10]
+        alphas = [1, 1.5, 2]
+        betas = [1, 1.5, 2]
+        evaporation_rates = [0.1, 0.3, 0.5]
+        fitness_coefficients = [0.02, 0.03, 0.04]
+        iteration_counts = [50, 100]
+
+        # Hyperparameter tuning
+        best_hv = 0
+        best_params = None
+        params = itertools.product(ant_counts, alphas, betas, evaporation_rates, fitness_coefficients, iteration_counts)
+
+        util = Util()
+        # calculate distance matrix of all edges
+        distance_matrix = util.calculate_distance_matrix(problem.coordinates)
+        local_heuristic = util.calculate_local_heuristic(problem.coordinates)
+
+        # Solve the problem with the current parameters
+        for no_ants, alpha, beta, rho, Q, iterations in params:
+            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants, distance_matrix, local_heuristic)
+            nds = aco.solve()
+
+            # calculate hypervolume
             objectives = np.array([sol.objectives for sol in nds.entries])
             print(objectives)
-            hv = HV(ref_point=ref_point)
-            print(f'HV: {hv(objectives)}')         
 
-if __name__ == "__main__":
-    main()
+            # Normalize the objectives
+            z_ideal = np.array(Z_ideal[instance])
+            z_nadir = np.array(Z_nadir[instance])
+            for i in range(len(objectives)):
+                objectives[i][0] = (objectives[i][0] - z_ideal[0]) / (z_nadir[0] - z_ideal[0])
+                objectives[i][1] = (objectives[i][1] - z_ideal[1]) / (z_nadir[1] - z_ideal[1])
 
+            print(objectives)
 
+            hv = HV(ref_point=(1, 1))
+            hv_value = hv.do(objectives)
+            print(f'HV: {hv(objectives)}')
+
+            # track best parameters
+            if hv_value > best_hv:
+                best_hv = hv_value
+                best_params = (no_ants, alpha, beta, rho, Q, iterations)
+
+            print(f"Params: {(no_ants, alpha, beta, rho, Q, iterations)}, HV: {hv_value}")
+
+        print(f"Best HV: {best_hv} with Params: {best_params}")

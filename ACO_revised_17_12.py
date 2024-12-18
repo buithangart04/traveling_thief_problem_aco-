@@ -228,7 +228,6 @@ class ACO:
         # calculate distance matrix of all edges
         self.distance_matrix = self.calculate_distance_matrix(problem.coordinates)
         self.local_heuristic = self.calculate_local_heuristic(problem.coordinates)
-
         self.problem = problem
 
     def calculate_distance_matrix(self, coordinates):
