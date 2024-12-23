@@ -153,7 +153,7 @@ class NonDominatedSet:
             self.entries.append(solution)
 
         if is_added & len(self.entries) > self.number_of_entries:
-            if solution.objectives[0] > 50 :  print(f'___________: {solution.objectives[0]}')
+            # if solution.objectives[0] > 50:  print(f'___________: {solution.objectives[0]}')
             self.remove_lowest_crowding_distance()
 
         return is_added
@@ -161,7 +161,7 @@ class NonDominatedSet:
 
 class Solution:
     """
-    This is a solution objective class that stores the tour, packing plan, 
+    This is a solution objective class that stores the tour, packing plan,
     and objective values.
     """
 
@@ -215,7 +215,8 @@ class Solution:
 
 
 class ACO:
-    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants, distance_matrix, local_heuristic):
+    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants, distance_matrix,
+                 local_heuristic):
         self.nds = NonDominatedSet(num_of_solutions)
         self.Q = Q
         self._rho = _rho
@@ -247,14 +248,18 @@ class ACO:
 
     def construct_tsp_tour(self, num_of_cities):
         tour = [0]
+        visited = [False for _ in range(num_of_cities)]
+        visited[0] = True
+
         while len(tour) < num_of_cities:
             current_city = tour[-1]
             probabilities = []
+
             for j in range(num_of_cities):
-                if j not in tour:
+                if not visited[j]:
                     tau = self.pheromone_matrix[current_city][j]
-                    # update pheromone in range of [0.1,1] to make the solutions dont converge too quickly 
-                    if tau < 0.1 :
+                    # update pheromone in range of [0.1,1] to make the solutions dont converge too quickly
+                    if tau < 0.1:
                         self.pheromone_matrix[current_city][j] = 0.1
                         tau = 0.1
                     elif tau > 1:
@@ -264,10 +269,12 @@ class ACO:
                     probabilities.append((tau ** self._alpha) * (eta ** self._beta))
                 else:
                     probabilities.append(0)
+
             probabilities = np.array(probabilities)
             probabilities /= probabilities.sum()
             next_city = np.random.choice(range(num_of_cities), p=probabilities)
             tour.append(next_city)
+            visited[next_city] = True
         # the tour start and end at the first city
         tour.append(0)
         return tour
@@ -282,7 +289,7 @@ class ACO:
             distance_until_end[tour[i]] = distance_until_end[tour[i + 1]] + self.distance_matrix[tour[i]][tour[i + 1]]
 
         for _ in range(n_tries):
-            # random theta, delta, gamma between 0 and 1, and theta + delta + gamma = 1 
+            # random theta, delta, gamma between 0 and 1, and theta + delta + gamma = 1
             theta, delta, gamma = np.random.rand(3)
             norm = theta + delta + gamma
             theta, delta, gamma = theta / norm, delta / norm, gamma / norm
@@ -301,15 +308,19 @@ class ACO:
             # list of plans, the first plan always select no bag.
             total_profit = [0]
             current_plan = [{}]
+
             # start with 1 selected bag
             number_of_selected_bags = 1
+            visited = [False for _ in range(self.problem.num_of_cities)]
+
             for _, profit, weight, city, index in scores:
                 if current_weight + weight <= problem.max_weight:
                     # get the previous plan and append this bag to this plan
                     previous_profit = total_profit[number_of_selected_bags - 1]
                     previous_plan = current_plan[number_of_selected_bags - 1].copy()
-                    if city not in previous_plan:
+                    if not visited[city]:
                         previous_plan[city] = 0
+                        visited[city] = True
                     previous_plan[city] += weight
                     current_weight += weight
                     previous_profit += profit
@@ -340,7 +351,6 @@ class ACO:
         return total_time
 
     def calculate_fitness(self, total_profit, total_time):
-        print(self.Q * total_profit / total_time)
         return self.Q * total_profit / total_time
 
     def update_pheromones(self, tour, fitness):
@@ -369,7 +379,7 @@ class ACO:
 
     def solve(self):
         for _ in range(self.iterations):
-            # print(f"Iteration: {_}")
+            print(f"Iteration: {_}")
             for k in range(self.n_ants):
                 tour = self.construct_tsp_tour(self.problem.num_of_cities)
 
@@ -379,6 +389,7 @@ class ACO:
                 self.update_solutions_by_tour(tour, True)
                 self.update_solutions_by_tour(new_tour, False)
         return self.nds
+
 
 class Utils:
     def __init__(self):
@@ -395,52 +406,52 @@ class Utils:
         return [[1 / math.dist(p1, p2) if i != j and math.dist(p1, p2) != 0 else 0
                  for j, p1 in enumerate(coordinates)]
                 for i, p2 in enumerate(coordinates)]
-    
-    def write_2_file(self, nds, vars, instance_name, z_ideal, z_nadir, is_best = False):
+
+    def write_2_file(self, nds, vars, instance_name, z_ideal, z_nadir, is_best=False):
         base_folder = "results"
         sub_folder = instance_name
         folder_path = os.path.join(base_folder, sub_folder)
         os.makedirs(folder_path, exist_ok=True)
         sub_fix = '.txt'
-        if is_best == True: sub_fix = '_best'+ sub_fix
-        #write the final solutions
+        if is_best == True: sub_fix = '_best' + sub_fix
+        # write the final solutions
         f_file_path = os.path.join(folder_path, f'f{sub_fix}')
-        
+
         objectives = np.array([sol.objectives for sol in nds.entries])
         if is_best == True:
             with open(f_file_path, "a") as file:
-                    file.write(vars+ '\n')
-                    for row in objectives:
-                        row_copy = row.copy()
-                        row_copy[-1] = abs(row_copy[-1])
-                        formatted_row = " ".join(map(str, row_copy))
-                        file.write(formatted_row + "\n")
-            #write tours and plan for these tours
+                file.write(vars + '\n')
+                for row in objectives:
+                    row_copy = row.copy()
+                    row_copy[-1] = abs(row_copy[-1])
+                    formatted_row = " ".join(map(str, row_copy))
+                    file.write(formatted_row + "\n")
+            # write tours and plan for these tours
             x_file_path = os.path.join(folder_path, f'x{sub_fix}')
             with open(x_file_path, "a") as file:
-                    file.write(vars+ '\n')
-                    for sol in nds.entries:
-                        tour = sol.pi
-                        plan = sol.z
-                        tour_info = " ".join(map(str, tour[:len(tour) - 1]))
-                        plan_info = " ".join(map(str, plan))
-                        file.write(tour_info + "\n"+ plan_info + "\n\n")
+                file.write(vars + '\n')
+                for sol in nds.entries:
+                    tour = sol.pi
+                    plan = sol.z
+                    tour_info = " ".join(map(str, tour[:len(tour) - 1]))
+                    plan_info = " ".join(map(str, plan))
+                    file.write(tour_info + "\n" + plan_info + "\n\n")
 
         for i in range(len(objectives)):
             objectives[i][0] = (objectives[i][0] - z_ideal[0]) / (z_nadir[0] - z_ideal[0])
             objectives[i][1] = (objectives[i][1] - z_ideal[1]) / (z_nadir[1] - z_ideal[1])
-            
+
         # calculate hv
         hv = HV(ref_point=(1, 1))
         hv_value = hv(objectives)
         if is_best == True:
             hv_file_path = os.path.join(folder_path, f'hv{sub_fix}')
             with open(hv_file_path, "a") as file:
-                file.write(vars+ '\n')
+                file.write(vars + '\n')
                 file.write(str(hv_value) + '\n')
 
         return hv_value
-        
+
 
 if __name__ == "__main__":
     instance_2_run = ['fnl4461-n22300']
@@ -475,7 +486,8 @@ if __name__ == "__main__":
 
         # Solve the problem with the current parameters
         for no_ants, alpha, beta, rho, Q, iterations in params:
-            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants, distance_matrix, local_heuristic)
+            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants, distance_matrix,
+                      local_heuristic)
             nds = aco.solve()
             vars = f'----------no_ants : {no_ants},alpha: {alpha}, beta: {beta}, rho: {rho}, Q: {Q},iterations: {iterations}----------'
 
