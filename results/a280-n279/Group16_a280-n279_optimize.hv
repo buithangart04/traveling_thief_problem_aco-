@@ -1,0 +1,216 @@
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.7182851919371009
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.7183547043348443
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.7249547155307766
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.7087076871936073
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.718527199615371
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.7165731578434553
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.7099125292161449
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.7118469585438665
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.7188940037300748
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.889303752344744
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.8934099710358422
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.8971953182286799
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.8849756537669546
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.8857742376986874
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.8877675329026661
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.8850436843985854
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.8866419932534579
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.884653811438696
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.9146403190591479
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.9140478241792307
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.9170672112336214
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.9007241379824493
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.9076772271823136
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.9054020723043424
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.9050911847437687
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.9040897783392098
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.9069892086046976
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.7521248871176281
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.751906591674304
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.7551466448154359
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.7324646331886462
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.7420934525083067
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.7461561251028432
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.728025435088457
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.7355884941886839
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.7396293960001792
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.734315306576743
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.7229506299359946
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.7239645295746657
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.7175183916244349
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.7228024241892987
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.7202646654183893
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.7115141473717673
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.716009932188607
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.7200884804294146
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.8905557360825748
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.889963401361776
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.9021152071256657
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.8881892520810586
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.8893401421374574
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.8878174445016727
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.8853383815090149
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.8877699888872083
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.8912896287986256
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.7551142782487277
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.7516265030551997
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.7567888332420584
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.7397295685722158
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.7462754570913989
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.7472251979606046
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.7267297646928087
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.7330239842978562
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.7409337122925793
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.9179806673355555
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.9163423947280918
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.9191299563963585
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.9046785581966142
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.9070569762349937
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.9044814983383618
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.9068854580076391
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.9103882045974423
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.9045540717913855
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.7250205295066448
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.7187764404544382
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.7303592127290165
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.7154759218603339
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.7241644505239007
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.7216096829043063
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.714724174852769
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.720908562310975
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.7199670133714156
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.8936282217526207
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.8964400833222683
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.8955998876339222
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.8871158349724216
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.8893041440861224
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.8884737768877697
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.8859371588835816
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.8873144348935909
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.8921054331647453
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.7531511335972969
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.75855513188666
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.7575744768664215
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.7379441109560301
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.7520123757433889
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.7462353037657986
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.7270293809493087
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.7415428195850394
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.7439116322423058
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.9183928823871044
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.9176588019070087
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.920073012655197
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.9101727371949133
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.9060758528028368
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.9064347441199606
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.9072452002324239
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.9066589643149935
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.9041428844438815
