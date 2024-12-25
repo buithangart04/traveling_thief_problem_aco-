@@ -160,7 +160,7 @@ class NonDominatedSet:
 
 class Solution:
     """
-    This is a solution objective class that stores the tour, packing plan, 
+    This is a solution objective class that stores the tour, packing plan,
     and objective values.
     """
 
@@ -214,7 +214,7 @@ class Solution:
 
 
 class ACO:
-    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants, distance_matrix, local_heuristic):
+    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants, distance_matrix):
         self.nds = NonDominatedSet(num_of_solutions)
         self.Q = Q
         self._rho = _rho
@@ -227,7 +227,6 @@ class ACO:
         np.fill_diagonal(self.pheromone_matrix, 0)
         self.problem = problem
         self.distance_matrix = distance_matrix
-        self.local_heuristic = local_heuristic
 
     def swap_cities(self, tour, n):
         # if the number of cites is less than 2, we can not swap 2 different cities because the start city always is city 0
@@ -254,21 +253,21 @@ class ACO:
             for j in range(num_of_cities):
                 if not visited[j]:
                     tau = self.pheromone_matrix[current_city][j]
-                    # update pheromone in range of [0.1,1] to make the solutions dont converge too quickly 
-                    if tau < 0.1 :
+                    # update pheromone in range of [0.1,1] to make the solutions dont converge too quickly
+                    if tau < 0.1:
                         self.pheromone_matrix[current_city][j] = 0.1
                         tau = 0.1
                     elif tau > 1:
                         self.pheromone_matrix[current_city][j] = 1
                         tau = 1
-                    eta = self.local_heuristic[current_city][j]
-                    if (tau ** self._alpha) * (eta ** self._beta) == 0 :
+                    eta = self.distance_matrix[current_city][j] if self.distance_matrix[current_city][j] != 0 else 1.0
+                    if (tau ** self._alpha) * (eta ** self._beta) == 0:
                         print(f'j: {j}, tau: {tau}, eta: {eta}')
                     probabilities.append((tau ** self._alpha) * (eta ** self._beta))
                 else:
                     probabilities.append(0)
             probabilities = np.array(probabilities)
-            if probabilities.sum() == 0: 
+            if probabilities.sum() == 0:
                 print(f'sum 0: {probabilities}')
                 print(f'len tour: {len(tour)}')
                 print(f'visited cities: {visited}')
@@ -290,7 +289,7 @@ class ACO:
             distance_until_end[tour[i]] = distance_until_end[tour[i + 1]] + self.distance_matrix[tour[i]][tour[i + 1]]
 
         for _ in range(n_tries):
-            # random theta, delta, gamma between 0 and 1, and theta + delta + gamma = 1 
+            # random theta, delta, gamma between 0 and 1, and theta + delta + gamma = 1
             theta, delta, gamma = np.random.rand(3)
             norm = theta + delta + gamma
             theta, delta, gamma = theta / norm, delta / norm, gamma / norm
@@ -387,6 +386,7 @@ class ACO:
                 self.update_solutions_by_tour(new_tour, False)
         return self.nds
 
+
 class Utils:
     def __init__(self):
         pass
@@ -396,43 +396,34 @@ class Utils:
                  for j, p1 in enumerate(coordinates)]
                 for i, p2 in enumerate(coordinates)]
 
-    """calculate local heuristic in the constructing tour part"""
-
-    def calculate_local_heuristic(self, coordinates):
-        # if 2 cities have the same coordinates, the local heuristic is the largest one and equal 1.0
-        # (because it doesn't take any time to travel to this city)
-        return [[1 / math.dist(p1, p2) if i != j and math.dist(p1, p2) != 0 else 1.0
-                 for j, p1 in enumerate(coordinates)]
-                for i, p2 in enumerate(coordinates)]
-    
     def write_2_file(self, nds, vars, instance_name):
         base_folder = "results"
         sub_folder = instance_name
         folder_path = os.path.join(base_folder, sub_folder)
         os.makedirs(folder_path, exist_ok=True)
         prefix = f'Group16_{instance_name}_optimize'
-        #write the final solutions
+        # write the final solutions
         f_file_path = os.path.join(folder_path, f'{prefix}.f')
         objectives = np.array([sol.objectives for sol in nds.entries])
         with open(f_file_path, "a") as file:
-                file.write(vars+ '\n')
-                for row in objectives:
-                    row_copy = row.copy()
-                    row_copy[-1] = abs(row_copy[-1])
-                    formatted_row = " ".join(map(str, row_copy))
-                    file.write(formatted_row + "\n")
-        #write tours and plan for these tours
+            file.write(vars + '\n')
+            for row in objectives:
+                row_copy = row.copy()
+                row_copy[-1] = abs(row_copy[-1])
+                formatted_row = " ".join(map(str, row_copy))
+                file.write(formatted_row + "\n")
+        # write tours and plan for these tours
         x_file_path = os.path.join(folder_path, f'{prefix}.x')
         with open(x_file_path, "a") as file:
-                file.write(vars+ '\n')
-                for sol in nds.entries:
-                    tour = sol.pi
-                    plan = sol.z
-                    tour_info = " ".join(map(str, tour[:len(tour) - 1]))
-                    plan_info = " ".join(map(str, plan))
-                    file.write(tour_info + "\n"+ plan_info + "\n\n")
+            file.write(vars + '\n')
+            for sol in nds.entries:
+                tour = sol.pi
+                plan = sol.z
+                tour_info = " ".join(map(str, tour[:len(tour) - 1]))
+                plan_info = " ".join(map(str, plan))
+                file.write(tour_info + "\n" + plan_info + "\n\n")
         return (f_file_path, x_file_path)
-    
+
     def calculate_hv(self, instance_name, Z_ideal, Z_nadir, f_file_path, x_file_path):
         # Normalize the objectives
         z_ideal = np.array(Z_ideal[instance_name])
@@ -451,7 +442,7 @@ class Utils:
                         row = [float(x) for x in line.split()]
                         # get negative value of profit to calculate hv
                         row[1] = -row[1]
-                        '''compare this solution with the sample z_ideal and z_nadir (in the problem on github) 
+                        '''compare this solution with the sample z_ideal and z_nadir (in the problem on github)
                         to get the correct z_ideal and z_nadir'''
                         for i in range(len(row)):
                             if row[i] > z_nadir[i]:
@@ -485,14 +476,14 @@ class Utils:
             # file.write(best_hv_key + '\n')
             file.write(str(best_hv) + '\n')
             file.write(f'z_ideal: {z_ideal}, z_nadir: {z_nadir}' + '\n')
-        
+
         with open(f'results/{instance}/{prefix}.f', 'a') as file:
             # file.write(best_hv_key + '\n')
             for row in best_objectives:
-                    row_copy = row.copy()
-                    row_copy[-1] = abs(row_copy[-1])
-                    formatted_row = " ".join(map(str, row_copy))
-                    file.write(formatted_row + "\n")
+                row_copy = row.copy()
+                row_copy[-1] = abs(row_copy[-1])
+                formatted_row = " ".join(map(str, row_copy))
+                file.write(formatted_row + "\n")
 
         with open(f'results/{instance}/{prefix}.x', 'a') as file:
             with open(x_file_path, 'r') as x_file:
@@ -503,20 +494,26 @@ class Utils:
                         if line.startswith('--'):
                             break
                         file.write(line)
-                    if best_hv_key in line: 
+                    if best_hv_key in line:
                         # file.write(best_hv_key + '\n')
                         is_append = True
                     line = x_file.readline()
-        
+
 
 if __name__ == "__main__":
-    instance_2_run = ['fnl4461-n4460']
-    Z_ideal = {'test-example-n4': [20.0, -74],'a280-n279': [2613.0, -42036.0], 'a280-n1395': [2613.0, -489194.0], 'a280-n2790': [2613.0, -1375443.0],
-                'fnl4461-n4460': [185359.0, -645150.0], 'fnl4461-n22300': [(185359.0, -7827881.0)], 'fnl4461-n44600':[185359.0, -22136989.0]
-                , 'pla33810-n33809': [66048945.0, -4860715.0], 'pla33810-n169045': [66048945.0, -59472432.0], 'pla33810-n338090':[66048945.0, -168033267.0]}
-    Z_nadir = {'test-example-n4': [38.91, -0.0],'a280-n279': [5444.0, -0.0], 'a280-n1395': [6573.0, -0.0], 'a280-n2790': [6646.0, -0.0], 
-               'fnl4461-n4460': [442464.0, -0.0], 'fnl4461-n22300': [(452454.0, -0.0)], 'fnl4461-n44600':[459901.0, -0.],
-               'pla33810-n33809': [168432301.0, -0.0], 'pla33810-n169045': [169415148.0, -0.0],  'pla33810-n338090':[168699977.0, -0.0]}
+    instance_2_run = ['test-example-n4']
+    Z_ideal = {'test-example-n4': [20.0, -74], 'a280-n279': [2613.0, -42036.0], 'a280-n1395': [2613.0, -489194.0],
+               'a280-n2790': [2613.0, -1375443.0],
+               'fnl4461-n4460': [185359.0, -645150.0], 'fnl4461-n22300': [(185359.0, -7827881.0)],
+               'fnl4461-n44600': [185359.0, -22136989.0]
+        , 'pla33810-n33809': [66048945.0, -4860715.0], 'pla33810-n169045': [66048945.0, -59472432.0],
+               'pla33810-n338090': [66048945.0, -168033267.0]}
+    Z_nadir = {'test-example-n4': [38.91, -0.0], 'a280-n279': [5444.0, -0.0], 'a280-n1395': [6573.0, -0.0],
+               'a280-n2790': [6646.0, -0.0],
+               'fnl4461-n4460': [442464.0, -0.0], 'fnl4461-n22300': [(452454.0, -0.0)],
+               'fnl4461-n44600': [459901.0, -0.],
+               'pla33810-n33809': [168432301.0, -0.0], 'pla33810-n169045': [169415148.0, -0.0],
+               'pla33810-n338090': [168699977.0, -0.0]}
 
     for instance in instance_2_run:
         with open(f'resources/{instance}.txt', 'r', encoding='utf-8') as file:
@@ -546,17 +543,16 @@ if __name__ == "__main__":
         util = Utils()
         # calculate distance matrix of all edges
         distance_matrix = util.calculate_distance_matrix(problem.coordinates)
-        local_heuristic = util.calculate_local_heuristic(problem.coordinates)
 
         f_file_path = None
         x_file_path = None
 
         # Solve the problem with the current parameters
         for no_ants, alpha, beta, rho, Q, iterations in params:
-            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants, distance_matrix, local_heuristic)
+            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants, distance_matrix)
             nds = aco.solve()
             vars = f'----------no_ants : {no_ants},alpha: {alpha}, beta: {beta}, rho: {rho}, Q: {Q},iterations: {iterations}----------'
-            f_file_path, x_file_path =  util.write_2_file(nds, vars, instance)
-        # to find optimized parameters, we compare the hv between the solutions, and we have to calculate it finally 
+            f_file_path, x_file_path = util.write_2_file(nds, vars, instance)
+        # to find optimized parameters, we compare the hv between the solutions, and we have to calculate it finally
         # because we need to have the same ideal and nadir points for all parameter combinations
         util.calculate_hv(instance, Z_ideal, Z_nadir, f_file_path, x_file_path)
