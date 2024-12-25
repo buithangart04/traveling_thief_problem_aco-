@@ -482,12 +482,12 @@ class Utils:
                 best_objectives = value
         # write the final(best) results to files
         with open(f'results/{instance}/{prefix}.hv', 'a') as file:
-            file.write(best_hv_key + '\n')
+            # file.write(best_hv_key + '\n')
             file.write(str(best_hv) + '\n')
             file.write(f'z_ideal: {z_ideal}, z_nadir: {z_nadir}' + '\n')
         
         with open(f'results/{instance}/{prefix}.f', 'a') as file:
-            file.write(best_hv_key + '\n')
+            # file.write(best_hv_key + '\n')
             for row in best_objectives:
                     row_copy = row.copy()
                     row_copy[-1] = abs(row_copy[-1])
@@ -504,19 +504,19 @@ class Utils:
                             break
                         file.write(line)
                     if best_hv_key in line: 
-                        file.write(best_hv_key + '\n')
+                        # file.write(best_hv_key + '\n')
                         is_append = True
                     line = x_file.readline()
         
 
 if __name__ == "__main__":
-    instance_2_run = ['test-example-n4']
-    Z_ideal = {'test-example-n4': [20.0, -74],'a280-n279': [2613.0, -42036.0], 'a280-n1395': [2613.0, -489194.0], 'a280_n2790': [2613.0, -1375443.0],
-                'fnl4461_n4460': [185359.0, -645150.0], 'fnl4461_n22300': [(185359.0, -7827881.0)], 'fnl4461_n44600':[185359.0, -22136989.0]
-                , 'pla33810_n33809': [66048945.0, -4860715.0], 'pla33810_n169045': [66048945.0, -59472432.0], 'pla33810_n338090':[66048945.0, -168033267.0]}
-    Z_nadir = {'test-example-n4': [38.91, -0.0],'a280-n279': [5444.0, -0.0], 'a280-n1395': [6573.0, -0.0], 'a280_n2790': [6646.0, -0.0], 
-               'fnl4461_n4460': [442464.0, -0.0], 'fnl4461_n22300': [(452454.0, -0.0)], 'fnl4461_n44600':[459901.0, -0.],
-               'pla33810_n33809': [168432301.0, -0.0], 'pla33810_n169045': [169415148.0, -0.0],  'pla33810_n338090':[168699977.0, -0.0]}
+    instance_2_run = ['fnl4461-n4460']
+    Z_ideal = {'test-example-n4': [20.0, -74],'a280-n279': [2613.0, -42036.0], 'a280-n1395': [2613.0, -489194.0], 'a280-n2790': [2613.0, -1375443.0],
+                'fnl4461-n4460': [185359.0, -645150.0], 'fnl4461-n22300': [(185359.0, -7827881.0)], 'fnl4461-n44600':[185359.0, -22136989.0]
+                , 'pla33810-n33809': [66048945.0, -4860715.0], 'pla33810-n169045': [66048945.0, -59472432.0], 'pla33810-n338090':[66048945.0, -168033267.0]}
+    Z_nadir = {'test-example-n4': [38.91, -0.0],'a280-n279': [5444.0, -0.0], 'a280-n1395': [6573.0, -0.0], 'a280-n2790': [6646.0, -0.0], 
+               'fnl4461-n4460': [442464.0, -0.0], 'fnl4461-n22300': [(452454.0, -0.0)], 'fnl4461-n44600':[459901.0, -0.],
+               'pla33810-n33809': [168432301.0, -0.0], 'pla33810-n169045': [169415148.0, -0.0],  'pla33810-n338090':[168699977.0, -0.0]}
 
     for instance in instance_2_run:
         with open(f'resources/{instance}.txt', 'r', encoding='utf-8') as file:
