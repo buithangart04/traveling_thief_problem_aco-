@@ -152,7 +152,7 @@ class NonDominatedSet:
         if is_added:
             self.entries.append(solution)
 
-        if is_added & len(self.entries) > self.number_of_entries:
+        if is_added and len(self.entries) > self.number_of_entries:
             self.remove_lowest_crowding_distance()
 
         return is_added
