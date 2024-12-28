@@ -47,8 +47,9 @@ class TravelingThiefProblem:
                 for i in range(self.num_of_cities):
                     line = file.readline()
                     parts = line.split()
-                    self.coordinates[i][0] = float(parts[1].strip())
-                    self.coordinates[i][1] = float(parts[2].strip())
+                    index = int(parts[0].strip()) - 1 
+                    self.coordinates[index][0] = float(parts[1].strip())
+                    self.coordinates[index][1] = float(parts[2].strip())
             elif "ITEMS SECTION" in line:
                 for i in range(self.num_of_items):
                     line = file.readline()
@@ -282,6 +283,7 @@ class ACO:
     def construct_packing_plan(self, tour, n_tries):
         best_plan = [{}]
         best_profit = [0, 0]
+        selected_bags = []
 
         # distance_until_end[i] is the distance from city i to the end of the tour
         distance_until_end = [0 for _ in range(self.problem.num_of_cities)]
@@ -308,6 +310,7 @@ class ACO:
             # list of plans, the first plan always select no bag.
             total_profit = [0]
             current_plan = [{}]
+            current_selected_bags = [{}]
             # start with 1 selected bag
             number_of_selected_bags = 1
             for _, profit, weight, city, index in scores:
@@ -315,22 +318,26 @@ class ACO:
                     # get the previous plan and append this bag to this plan
                     previous_profit = total_profit[number_of_selected_bags - 1]
                     previous_plan = current_plan[number_of_selected_bags - 1].copy()
+                    previous_selected_bags = current_selected_bags[number_of_selected_bags - 1].copy()
                     if city not in previous_plan:
                         previous_plan[city] = 0
                     previous_plan[city] += weight
                     current_weight += weight
                     previous_profit += profit
+                    previous_selected_bags[index] = 1
 
                     total_profit.append(previous_profit)
                     current_plan.append(previous_plan)
+                    current_selected_bags.append(previous_selected_bags)
                     number_of_selected_bags += 1
                 else:
                     break
                 if total_profit[1] > best_profit[1]:
                     best_plan = current_plan
                     best_profit = total_profit
+                    selected_bags = current_selected_bags
 
-        return best_plan, best_profit
+        return selected_bags, best_plan, best_profit
 
     def calculate_total_time(self, tour, best_plan, capacity, max_speed, min_speed):
         total_time = 0
@@ -355,17 +362,13 @@ class ACO:
             self.pheromone_matrix[tour[i]][tour[i + 1]] += fitness
 
     def update_solutions_by_tour(self, tour, is_original_tour):
-        best_plan, total_profit = self.construct_packing_plan(tour, 3)
+        selected_bags, best_plan, total_profit = self.construct_packing_plan(tour, 3)
         for i in range(len(total_profit)):
             total_time = self.calculate_total_time(tour, best_plan[i],
                                                    self.problem.max_weight, self.problem.max_speed,
                                                    self.problem.min_speed)
-            # the plan represents for whether the thief selected bag or not in the city
-            plan = np.zeros(len(tour) - 1, dtype=int)
-            for j in range(len(plan)):
-                city = tour[j]
-                if best_plan[i].get(city, 0) > 0: plan[city] = 1
-
+            # the plan represents for whether the item is selected or not
+            plan = [selected_bags[i].get(j, 0) for j in range(len(self.problem.items))]
             sol = Solution(total_time, total_profit[i], tour, plan)
             self.nds.add(sol)
 
@@ -419,7 +422,7 @@ class Utils:
             for sol in nds.entries:
                 tour = sol.pi
                 plan = sol.z
-                tour_info = " ".join(map(str, tour[:len(tour) - 1]))
+                tour_info = " ".join(map(str, [x + 1 for x in tour[:len(tour) - 1]]))
                 plan_info = " ".join(map(str, plan))
                 file.write(tour_info + "\n" + plan_info + "\n\n")
         return (f_file_path, x_file_path)
