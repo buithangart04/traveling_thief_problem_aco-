@@ -1,2 +1,216 @@
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 1, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 5,alpha: 2, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 1, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 7,alpha: 2, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 1, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 1, rho: 0.5, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.1, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.1, Q: 0.3,iterations: 1000----------
+0.6505951511241711
 ----------no_ants : 10,alpha: 2, beta: 2, rho: 0.1, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.3, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.3, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.3, Q: 0.4,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.5, Q: 0.2,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.5, Q: 0.3,iterations: 1000----------
+0.6505951511241711
+----------no_ants : 10,alpha: 2, beta: 2, rho: 0.5, Q: 0.4,iterations: 1000----------
 0.6505951511241711

@@ -47,9 +47,8 @@ class TravelingThiefProblem:
                 for i in range(self.num_of_cities):
                     line = file.readline()
                     parts = line.split()
-                    index = int(parts[0].strip()) - 1 
-                    self.coordinates[index][0] = float(parts[1].strip())
-                    self.coordinates[index][1] = float(parts[2].strip())
+                    self.coordinates[i][0] = float(parts[1].strip())
+                    self.coordinates[i][1] = float(parts[2].strip())
             elif "ITEMS SECTION" in line:
                 for i in range(self.num_of_items):
                     line = file.readline()
@@ -261,7 +260,7 @@ class ACO:
                     elif tau > 1:
                         self.pheromone_matrix[current_city][j] = 1
                         tau = 1
-                    eta = self.distance_matrix[current_city][j] if self.distance_matrix[current_city][j] != 0 else 1.0
+                    eta = 1.0/self.distance_matrix[current_city][j] if self.distance_matrix[current_city][j] != 0 else 1.0
                     if (tau ** self._alpha) * (eta ** self._beta) == 0:
                         print(f'j: {j}, tau: {tau}, eta: {eta}')
                     probabilities.append((tau ** self._alpha) * (eta ** self._beta))
@@ -381,14 +380,11 @@ class ACO:
             # print(f"Iteration: {_}")
             for k in range(self.n_ants):
                 tour = self.construct_tsp_tour(self.problem.num_of_cities)
-
                 # apply local search to avoid local mimimum value
                 new_tour = self.swap_cities(tour, self.problem.num_of_cities)
-
                 self.update_solutions_by_tour(tour, True)
                 self.update_solutions_by_tour(new_tour, False)
         return self.nds
-
 
 class Utils:
     def __init__(self):
@@ -504,7 +500,7 @@ class Utils:
 
 
 if __name__ == "__main__":
-    instance_2_run = ['test-example-n4']
+    instance_2_run = ['fnl4461-n4460']
     Z_ideal = {'test-example-n4': [20.0, -74], 'a280-n279': [2613.0, -42036.0], 'a280-n1395': [2613.0, -489194.0],
                'a280-n2790': [2613.0, -1375443.0],
                'fnl4461-n4460': [185359.0, -645150.0], 'fnl4461-n22300': [(185359.0, -7827881.0)],
@@ -526,7 +522,7 @@ if __name__ == "__main__":
             num_of_solutions = Competition.number_of_solutions(problem)
         # Parameter ranges
         # ant_counts = [5, 7, 10]
-        ant_counts = [10]
+        ant_counts = [5]
         # alphas = [1, 2]
         alphas = [2]
         # betas = [1, 2]
