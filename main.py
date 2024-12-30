@@ -214,7 +214,7 @@ class Solution:
 
 
 class ACO:
-    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants, distance_matrix):
+    def __init__(self, problem, num_of_solutions, Q, _rho, _alpha, _beta, iterations, n_ants):
         self.nds = NonDominatedSet(num_of_solutions)
         self.Q = Q
         self._rho = _rho
@@ -226,7 +226,6 @@ class ACO:
         self.pheromone_matrix = np.random.uniform(0.1, 1, (problem.num_of_cities, problem.num_of_cities))
         np.fill_diagonal(self.pheromone_matrix, 0)
         self.problem = problem
-        self.distance_matrix = distance_matrix
 
     def swap_cities(self, tour, n):
         # if the number of cites is less than 2, we can not swap 2 different cities because the start city always is city 0
@@ -260,7 +259,10 @@ class ACO:
                     elif tau > 1:
                         self.pheromone_matrix[current_city][j] = 1
                         tau = 1
-                    eta = 1.0/self.distance_matrix[current_city][j] if self.distance_matrix[current_city][j] != 0 else 1.0
+
+                    distance = np.linalg.norm(np.array(self.problem.coordinates[current_city]) - np.array(self.problem.coordinates[j]))
+                    eta = 1.0/distance if distance != 0 else 1.0
+                    # eta = 1.0/self.distance_matrix[current_city][j] if self.distance_matrix[current_city][j] != 0 else 1.0
                     if (tau ** self._alpha) * (eta ** self._beta) == 0:
                         print(f'j: {j}, tau: {tau}, eta: {eta}')
                     probabilities.append((tau ** self._alpha) * (eta ** self._beta))
@@ -287,7 +289,8 @@ class ACO:
         # distance_until_end[i] is the distance from city i to the end of the tour
         distance_until_end = [0 for _ in range(self.problem.num_of_cities)]
         for i in range(len(tour) - 2, 0, -1):
-            distance_until_end[tour[i]] = distance_until_end[tour[i + 1]] + self.distance_matrix[tour[i]][tour[i + 1]]
+            distance_until_end[tour[i]] = distance_until_end[tour[i + 1]] + np.linalg.norm(np.array(self.problem.coordinates[tour[i]]) - np.array(self.problem.coordinates[tour[i + 1]]))
+            #self.distance_matrix[tour[i]][tour[i + 1]]
 
         for _ in range(n_tries):
             # random theta, delta, gamma between 0 and 1, and theta + delta + gamma = 1
@@ -347,7 +350,8 @@ class ACO:
             current_weight += best_plan.get(city, 0)
             current_speed = max_speed - current_weight * (max_speed - min_speed) / capacity
             if current_speed < min_speed: current_speed = min_speed
-            distance = self.distance_matrix[city][next_city]
+            # distance = self.distance_matrix[city][next_city]
+            distance = np.linalg.norm(np.array(self.problem.coordinates[city]) - np.array(self.problem.coordinates[next_city]))
             total_time += distance / current_speed
 
         return total_time
@@ -500,7 +504,7 @@ class Utils:
 
 
 if __name__ == "__main__":
-    instance_2_run = ['fnl4461-n4460']
+    instance_2_run = ['pla33810-n33809']
     Z_ideal = {'test-example-n4': [20.0, -74], 'a280-n279': [2613.0, -42036.0], 'a280-n1395': [2613.0, -489194.0],
                'a280-n2790': [2613.0, -1375443.0],
                'fnl4461-n4460': [185359.0, -645150.0], 'fnl4461-n22300': [(185359.0, -7827881.0)],
@@ -515,7 +519,7 @@ if __name__ == "__main__":
                'pla33810-n338090': [168699977.0, -0.0]}
 
     for instance in instance_2_run:
-        with open(f'resources/{instance}.txt', 'r', encoding='utf-8') as file:
+        with open(f'{instance}.txt', 'r', encoding='utf-8') as file:
             problem = TravelingThiefProblem()
             problem.read_problem(file)
             problem.name = instance
@@ -540,15 +544,13 @@ if __name__ == "__main__":
         params = itertools.product(ant_counts, alphas, betas, evaporation_rates, fitness_coefficients, iteration_counts)
 
         util = Utils()
-        # calculate distance matrix of all edges
-        distance_matrix = util.calculate_distance_matrix(problem.coordinates)
 
         f_file_path = None
         x_file_path = None
 
         # Solve the problem with the current parameters
         for no_ants, alpha, beta, rho, Q, iterations in params:
-            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants, distance_matrix)
+            aco = ACO(problem, num_of_solutions, Q, rho, alpha, beta, iterations, no_ants)
             nds = aco.solve()
             vars = f'----------no_ants : {no_ants},alpha: {alpha}, beta: {beta}, rho: {rho}, Q: {Q},iterations: {iterations}----------'
             f_file_path, x_file_path = util.write_2_file(nds, vars, instance)
