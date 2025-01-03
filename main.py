@@ -307,39 +307,76 @@ class ACO:
                     score = (profit ** theta) / ((weight ** delta) * (distance_until_end[city] ** gamma))
                 scores.append((score, profit, weight, city, index))
 
-            scores.sort(reverse=True, key=lambda x: x[0])
-            current_weight = 0
-            # list of plans, the first plan always select no bag.
-            total_profit = [0]
-            current_plan = [{}]
-            current_selected_bags = [{}]
-            # start with 1 selected bag
-            number_of_selected_bags = 1
-            for _, profit, weight, city, index in scores:
-                if current_weight + weight <= problem.max_weight:
-                    # get the previous plan and append this bag to this plan
-                    previous_profit = total_profit[number_of_selected_bags - 1]
-                    previous_plan = current_plan[number_of_selected_bags - 1].copy()
-                    previous_selected_bags = current_selected_bags[number_of_selected_bags - 1].copy()
-                    if city not in previous_plan:
-                        previous_plan[city] = 0
-                    previous_plan[city] += weight
-                    current_weight += weight
-                    previous_profit += profit
-                    previous_selected_bags[index] = 1
+                scores.sort(reverse=True, key=lambda x: x[0])
+                current_weight = 0
+                # list of plans, the first plan always select no bag.
+                total_profit = [0]
+                current_plan = [{}]
+                current_selected_bags = [{}]
+                visited = [False for _ in range(self.problem.num_of_cities)]
 
-                    total_profit.append(previous_profit)
-                    current_plan.append(previous_plan)
-                    current_selected_bags.append(previous_selected_bags)
-                    number_of_selected_bags += 1
+                # For the largest problem (pla), we use a different approach to reduce the time complexity
+                # To create the next solution, we don't take 1 item but a random number of items at a time
+                if problem.num_of_cities > 30000:
+                    random_step = 0
+                    for _, profit, weight, city, index in scores:
+                        if current_weight + weight <= problem.max_weight:
+                            if random_step == 0:
+                                # get the previous plan and append this bag to this plan
+                                previous_profit = total_profit[-1]
+                                previous_plan = current_plan[-1].copy()
+                                previous_selected_bags = current_selected_bags[-1].copy()
+                                random_step = random.randint(1, 400)
+
+                            if not visited[city]:
+                                previous_plan[city] = 0
+                                visited[city] = True
+                            previous_plan[city] += weight
+                            current_weight += weight
+                            previous_profit += profit
+                            previous_selected_bags[index] = 1
+                            random_step -= 1
+
+                            if random_step == 0:
+                                total_profit.append(previous_profit)
+                                current_plan.append(previous_plan)
+                                current_selected_bags.append(previous_selected_bags)
+                        else:
+                            break
+                        if len(total_profit) > 1 and total_profit[1] > best_profit[1]:
+                            best_plan = current_plan
+                            best_profit = total_profit
+                            selected_bags = current_selected_bags
                 else:
-                    break
-                if total_profit[1] > best_profit[1]:
-                    best_plan = current_plan
-                    best_profit = total_profit
-                    selected_bags = current_selected_bags
+                    # For all other problems, we take 1 item at a time
+                    # start with 1 selected bag
+                    number_of_selected_bags = 1
+                    for _, profit, weight, city, index in scores:
+                        if current_weight + weight <= problem.max_weight:
+                            # get the previous plan and append this bag to this plan
+                            previous_profit = total_profit[number_of_selected_bags - 1]
+                            previous_plan = current_plan[number_of_selected_bags - 1].copy()
+                            previous_selected_bags = current_selected_bags[number_of_selected_bags - 1].copy()
+                            if not visited[city]:
+                                previous_plan[city] = 0
+                                visited[city] = True
+                            previous_plan[city] += weight
+                            current_weight += weight
+                            previous_profit += profit
+                            previous_selected_bags[index] = 1
 
-        return selected_bags, best_plan, best_profit
+                            total_profit.append(previous_profit)
+                            current_plan.append(previous_plan)
+                            current_selected_bags.append(previous_selected_bags)
+                            number_of_selected_bags += 1
+                        else:
+                            break
+                        if total_profit[1] > best_profit[1]:
+                            best_plan = current_plan
+                            best_profit = total_profit
+                            selected_bags = current_selected_bags
+
+            return selected_bags, best_plan, best_profit
 
     def calculate_total_time(self, tour, best_plan, capacity, max_speed, min_speed):
         total_time = 0
@@ -535,7 +572,7 @@ if __name__ == "__main__":
         evaporation_rates = [0.1]
         # fitness_coefficients = [0.2, 0.3, 0.4]
         fitness_coefficients = [0.4]
-        iteration_counts = [1000]
+        iteration_counts = [10]
 
         # Hyperparameter tuning
         best_hv = -1
