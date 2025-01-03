@@ -318,15 +318,15 @@ class ACO:
                 # For the largest problem (pla), we use a different approach to reduce the time complexity
                 # To create the next solution, we don't take 1 item but a random number of items at a time
                 if problem.num_of_cities > 30000:
-                    random_step = 0
+                    random_num_of_items = 0
                     for _, profit, weight, city, index in scores:
                         if current_weight + weight <= problem.max_weight:
-                            if random_step == 0:
+                            if random_num_of_items == 0:
                                 # get the previous plan and append this bag to this plan
                                 previous_profit = total_profit[-1]
                                 previous_plan = current_plan[-1].copy()
                                 previous_selected_bags = current_selected_bags[-1].copy()
-                                random_step = random.randint(1, 400)
+                                random_num_of_items = random.randint(1, 400)
 
                             if not visited[city]:
                                 previous_plan[city] = 0
@@ -335,9 +335,9 @@ class ACO:
                             current_weight += weight
                             previous_profit += profit
                             previous_selected_bags[index] = 1
-                            random_step -= 1
+                            random_num_of_items -= 1
 
-                            if random_step == 0:
+                            if random_num_of_items == 0:
                                 total_profit.append(previous_profit)
                                 current_plan.append(previous_plan)
                                 current_selected_bags.append(previous_selected_bags)
