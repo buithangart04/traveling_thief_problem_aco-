@@ -69,7 +69,7 @@ class Competition:
     A class representing rules of the competition.
     """
     @staticmethod
-    def number_of_solutions(problem):
+    def get_number_of_solutions(problem):
         """
         This function return the number of solutions for each problem
         """
@@ -623,7 +623,7 @@ if __name__ == "__main__":
             problem = TravelingThiefProblem()
             problem.read_problem(file)
             problem.name = instance
-            num_of_solutions = Competition.number_of_solutions(problem)
+            num_of_solutions = Competition.get_number_of_solutions(problem)
         ant_counts = [5] # number of ants in each iteration
         alphas = [2] # the parameter to control pheromone influence 
         betas = [2] # the parameter to control local heuristic influence 
