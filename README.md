@@ -25,7 +25,7 @@ Any additional data files required by the program
 Clone the repository or download the project files to your local machine:
 ```
 git clone https://github.com/buithangart04/traveling_thief_problem_aco-.git
-cd cs2
+cd traveling_thief_problem_aco-/
 ```
 
 ## 2. Set Up the Environment (skip this part if you already have pymoo and numpy libraries in your environment)
